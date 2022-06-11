@@ -1,0 +1,60 @@
+﻿@using FE.GemsConsult.Todo.ViewModels
+@model TodoViewModel
+
+@{
+    ViewData["Title"] = "Todo";
+}
+
+<section>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">What do you intend doing?</div>
+                <div class="card-body">
+                    <form asp-controller="Todo" asp-action="AddItem" method="post" enctype="multipart/form-data">
+                        <div class="form-outline mb-2">
+                            <label asp-for=AddItem.ItemName></label>
+                            <input type="text" class="form-control" asp-for=AddItem.ItemName />
+                        </div>
+                        <div class="form-outline mb-2">
+                            <label asp-for=AddItem.ExecutionDate></label>
+                            <input type="date" asp-for="AddItem.ExecutionDate" id="datepicker" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+                        </div>
+                        <div class="form-outline mb-2">
+                            <label asp-for=AddItem.Description></label>
+                            <textarea type="text" class="form-control" asp-for=AddItem.Description></textarea>
+                        </div>
+                        <div class="text-center pt-1 pb-1">
+                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Save item</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 card">
+           <div class="mt-2">
+                <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Sn.</th>
+                        <th>Item Name</th>
+                        <th>Execution Date</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Created Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+           </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+<script>
+    $(function() {
+      $("#datepicker").datepicker();
+    });
+</script>
+}
