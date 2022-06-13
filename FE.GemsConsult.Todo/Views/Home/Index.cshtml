@@ -2,7 +2,22 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+body {
+    background-image:    url(imgs/checklist.jpg);
+    background-size:     cover;                     
+    background-repeat:   no-repeat;
+    background-position: center center;             
+}</style>
+
+<div style="margin-top:200px">
+    <div class="col-md-4 text-center">
+        <h3>Standardize Day-to-Day</h3>
+    <h4>Activities Organizer</h4>
+    <hr />
+    <h6>
+        <a class="btn btn-outline-primary text-white" asp-action="Register" asp-controller="Account"><strong>Try for free</strong></a>
+    </h6>
+    </div>
 </div>
+

@@ -1,14 +1,21 @@
-﻿namespace FE.GemsConsult.Todo.ViewModels
+﻿using Project.Service.Models.Responses;
+
+namespace FE.GemsConsult.Todo.ViewModels
 {
     public class TodoViewModel
     {
         public CreateTodoItemViewModel AddItem { get; set; }
-        public IEnumerable<AllTodoItmeViewModel> AllTodoItmes { get; set; }
+        public AllTodoItemResponse AllTodoItems { get; set; }
 
         public TodoViewModel()
         {
             AddItem = new CreateTodoItemViewModel();
-            AllTodoItmes = new List<AllTodoItmeViewModel>();
+            AllTodoItems = new AllTodoItemResponse();
         }
+    }
+
+    public class ExtendedResponse : AllTodoItemResponse
+    {
+        public CreateTodoItemViewModel AddItem { get; set; }
     }
 }

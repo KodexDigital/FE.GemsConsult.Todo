@@ -1,0 +1,38 @@
+﻿@using FE.GemsConsult.Todo.ViewModels
+@model EditItemViewModel
+
+@{
+    ViewData["Title"] = "Edit Item";
+}
+
+<section>
+    <div class=col-md-6>
+        <div class=card>
+            <div class=card-header>@ViewData["Title"]</div>
+            <div class=card-body>
+                <form asp-controller="Todo" asp-action="EditItem" method="post" enctype="multipart/form-data">
+                    <input type="hidden" class="form-control" asp-for=ItemId />
+                    <div class="form-outline mb-2">
+                        <label asp-for=ItemName></label>
+                        <input required type="text" class="form-control" asp-for=ItemName />
+                        <span asp-validation-for=ItemName class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-2">
+                        <label asp-for=ExecutionDate></label>
+                        <input required type="date" asp-for="ExecutionDate" id="datepicker" class="form-control" />
+                        <span asp-validation-for=ExecutionDate class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-3">
+                        <label asp-for=Description></label>
+                        <textarea required type="text" class="form-control" asp-for=Description></textarea>
+                        <span asp-validation-for=Description class="text-danger"></span>
+                    </div>
+                    <div class="text-center pt-1 pb-1">
+                        <button class="btn btn-primary btn-block gradient-custom-2 mb-3" type="submit">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+

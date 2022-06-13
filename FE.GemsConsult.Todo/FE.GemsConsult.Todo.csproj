@@ -7,12 +7,21 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;CS8618</NoWarn>
+    <NoWarn>1701;1702;CS8618;CS8601</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;CS8618</NoWarn>
+    <NoWarn>1701;1702;CS8618;CS8601</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="font-awesome" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Project.Service\Project.Service.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Update="wwwroot\bootstrap\css\bootstrap.min.css">

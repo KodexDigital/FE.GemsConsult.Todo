@@ -1,55 +1,165 @@
-﻿@using FE.GemsConsult.Todo.ViewModels
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using FE.GemsConsult.Todo.ViewModels
 @model TodoViewModel
 
 @{
     ViewData["Title"] = "Todo";
 }
 
-<section>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">What do you intend doing?</div>
-                <div class="card-body">
-                    <form asp-controller="Todo" asp-action="AddItem" method="post" enctype="multipart/form-data">
-                        <div class="form-outline mb-2">
-                            <label asp-for=AddItem.ItemName></label>
-                            <input type="text" class="form-control" asp-for=AddItem.ItemName />
-                        </div>
-                        <div class="form-outline mb-2">
-                            <label asp-for=AddItem.ExecutionDate></label>
-                            <input type="date" asp-for="AddItem.ExecutionDate" id="datepicker" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
-                        </div>
-                        <div class="form-outline mb-2">
-                            <label asp-for=AddItem.Description></label>
-                            <textarea type="text" class="form-control" asp-for=AddItem.Description></textarea>
-                        </div>
-                        <div class="text-center pt-1 pb-1">
-                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Save item</button>
-                        </div>
-                    </form>
+<style>
+    .custom-button {
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+    }
+</style>
+
+@if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("_tokenUserId")))
+{
+    <section>
+        <div class="row">
+            <div class=container>
+                @if (ViewBag.Status == true)
+                {
+                    <div class="alert alert-success alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                        <strong>@ViewBag.Info</strong>
+                    </div>
+                }
+                @if (ViewBag.Status == false)
+                {
+                    <div class="alert alert-danger alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                        <strong>@ViewBag.Info</strong>
+                    </div>
+                }
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">What do you intend doing?</div>
+                    <div class="card-body">
+                        <form asp-controller="Todo" asp-action="Index" method="post" enctype="multipart/form-data">
+                            <div class="form-outline mb-2">
+                                <label asp-for=AddItem.ItemName></label>
+                                <input required type="text" class="form-control" asp-for=AddItem.ItemName />
+                                <span asp-validation-for=AddItem.ItemName class="text-danger"></span>
+                            </div>
+                            <div class="form-outline mb-2">
+                                <label asp-for=AddItem.ExecutionDate></label>
+                                <input required type="date" asp-for="AddItem.ExecutionDate" id="datepicker" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                <span asp-validation-for=AddItem.ExecutionDate class="text-danger"></span>
+                            </div>
+                            <div class="form-outline mb-3">
+                                <label asp-for=AddItem.Description></label>
+                                <textarea required type="text" class="form-control" asp-for=AddItem.Description></textarea>
+                                <span asp-validation-for=AddItem.Description class="text-danger"></span>
+                            </div>
+                            <div class="text-center pt-1 pb-1">
+                                <button class="btn btn-primary btn-block gradient-custom-2 mb-3" type="submit">Save item</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 card">
+                <div class="mt-2">
+                    <table class="table table-bordered table-striped" style="font-size:12px">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Sn.</th>
+                                <th>Item Name</th>
+                                <th>Execution Date</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Created Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        @if (Model.AllTodoItems.DataItems == null || Model.AllTodoItems.DataItems.Count() == 0)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td colspan="7" class="bg-danger">
+                                        <div class="text-white">No Record found. Add Item</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                        else
+                        {
+                            <tbody>
+                                @{
+                                    var sn = 0;
+                                }
+                                @foreach (var item in Model.AllTodoItems.DataItems.OrderByDescending(t => t.CreatedAt))
+                                {
+                                    <tr>
+                                        <td>@(++sn)</td>
+                                        <td>@item.ItemName</td>
+                                        <td>@item.ExecutionDate</td>
+                                        <td>@item.Description</td>
+                                        @if (item.IsExecuted)
+                                        {
+                                            <td class="bg-success text-white" style="width:90px">
+                                                <span class=small><strong>EXECUTED <i class="fas fa-clipboard-check text-primary"></i></strong></span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="bg-primary text-white" style="width:90px">
+                                                <span class=small><strong>NOT DONE <i class="fas fa-clipboard-check text-warning"></i></strong></span>
+                                            </td>
+                                        }
+                                        <td>@item.CreatedAt</td>
+                                        <td class="text-center">
+                                            @if (!item.IsExecuted)
+                                            {
+                                                <div class=row>
+                                                    <div class="col-md-1">
+                                                        <a asp-action="EditItem" asp-controller="Todo" asp-route-itemId="@item.TodoId"> @* data-toggle="modal" data-target="#editModal"*@
+                                                            <i class="fas fa-edit text-primary" title="Edit item"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <form asp-controller="Todo" asp-action="RemoveItem" asp-route-itemId="@item.TodoId" method="post"
+                                              onclick="return confirm('Are sure you want to delete this item?')">
+                                                            <button type="submit" class="custom-button"><i class="fas fa-trash text-danger" title="Remove item"></i></button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <form asp-controller="Todo" asp-action="MarkAsDone" asp-route-itemId="@item.TodoId" method="post"
+                                              onclick="return confirm('Is this item Executed?')">
+                                                            <button type="submit" class="custom-button" style="border:none"><i class="fas fa-check-square text-success" title="Mark as done"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="col-md-8 card">
-           <div class="mt-2">
-                <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Sn.</th>
-                        <th>Item Name</th>
-                        <th>Execution Date</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Created Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-            </table>
-           </div>
+    </section>
+}
+else
+{
+    <section>
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h2>ACCESS DENIED</h2>
+            </div>
+            <div class="card-body">
+                <h2>Login to continue...</h2>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+}
+
 
 @section Scripts{
 <script>

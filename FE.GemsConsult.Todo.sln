@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FE.GemsConsult.Todo", "FE.GemsConsult.Todo\FE.GemsConsult.Todo.csproj", "{70ACE74C-04D5-40D7-A154-EF8EBA318A68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FE.GemsConsult.Todo", "FE.GemsConsult.Todo\FE.GemsConsult.Todo.csproj", "{70ACE74C-04D5-40D7-A154-EF8EBA318A68}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6C389F1C-5541-4CF7-A470-03D6859212C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Service", "Project.Service\Project.Service.csproj", "{B22296DB-FFE8-453B-8EC0-C7D34C16EA97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{70ACE74C-04D5-40D7-A154-EF8EBA318A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70ACE74C-04D5-40D7-A154-EF8EBA318A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70ACE74C-04D5-40D7-A154-EF8EBA318A68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B22296DB-FFE8-453B-8EC0-C7D34C16EA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B22296DB-FFE8-453B-8EC0-C7D34C16EA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B22296DB-FFE8-453B-8EC0-C7D34C16EA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B22296DB-FFE8-453B-8EC0-C7D34C16EA97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B22296DB-FFE8-453B-8EC0-C7D34C16EA97} = {6C389F1C-5541-4CF7-A470-03D6859212C2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {12890B80-F35B-49DE-A82A-F79CEC1E1909}
